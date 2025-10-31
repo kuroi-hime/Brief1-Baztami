@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <title>Historique</title>
+    </head>
+    <body class="font-[Inter]" onload="loadData()">
+        <header class="h-[15vh] px-3 flex justify-between">
+            <div class="flex items-end">
+                <img class="size-20" src="../images/logo_retouche.png">
+                <p class="text-xl font-semibold">BaZtami</p>
+            </div>
+            <nav class="w-[40vw] flex items-center">
+                <ul class="w-full flex justify-around text-lg font-medium">
+                    <li class="px-3 py-1 hover:border-b-2 hover:border-[#34D171]"><a href="../index.html">Accueil</a></li>
+                    <li class="px-3 py-1 hover:border-b-2 hover:border-[#34D171]"><a href="revenus.html">Revenus</a></li>
+                    <li class="px-3 py-1 hover:border-b-2 hover:border-[#34D171]"><a href="depenses.html">Dépenses</a></li>
+                    <li class="px-3 py-1 hover:border-b-2 hover:border-[#34D171]"><a href="">Historique</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main id="historique" class="grid grid-cols-4 gap-4 px-5 py-10">
+            <section id="dialog" class="hidden flex justify-center items-center fixed inset-0 bg-black/75">
+                <form id="myForm" class="flex px-10 py-6 bg-white rounded-2xl">
+                    <fieldset id="fieldset" class="grid grid-col-6 gap-4">
+                        <legend class="col-span-6 mb-4 font-semibold text-xl text-[#012962]">Modifier transaction</legend>
+                        <label class="col-span-1 col-start-1 font-medium text-lg" for="montant">Montant:</label>
+                        <input class="col-span-2 col-start-2 border-lime-300 border-b-2 outline-0 px-2" type="number" name="montant" id="montant" placeholder="Exemple: 532.99">
+                        <label class="col-span-1 col-start-4 font-medium text-lg" for="type">Type:</label>
+                        <select class="col-span-2 col-start-5 border-lime-300 border-b-2 outline-0 px-2" name="type" id="type">
+                            <option value="revenu">Revenu</option>
+                            <option value="depense">Dépense</option>
+                        </select>
+                        <label class="col-span-1 col-start-1 font-medium text-lg" for="date">Date:</label>
+                        <input class="col-span-5 col-start-2 border-lime-300 border-b-2 outline-0 px-2" type="date" name="date" id="date">
+                        <label class="col-span-6 font-medium text-lg" for="description">Description</label>
+                        <textarea class="col-span-6 border-lime-300 border-2 outline-0 p-2 rounded-xl overflow-y-auto" name="description" id="description" placeholder="Ajouter plus d'information"></textarea>
+                        <button id="modifier" class="col-span-1 col-start-1 font-medium text-lg bg-[#f29a00] px-5 py-1 rounded-xl" disabled>Modifier</button>
+                        <button id="annuler" class="col-span-1 col-start-6 font-medium text-lg bg-[#f29a00] px-5 py-1 rounded-xl">Annuler</button>
+                    </fieldset>
+                </form>
+            </section>
+        </main>
+        <script src="../scripts/historique.js"></script>
+    </body>
+</html>
