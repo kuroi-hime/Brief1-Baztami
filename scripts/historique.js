@@ -1,6 +1,7 @@
 let count = localStorage.length;
 let button_modifier = document.getElementById("modifier");
 let button_annuler = document.getElementById("annuler");
+var id_edited;
 
 function validateForm() {
 
@@ -8,7 +9,14 @@ function validateForm() {
   let date = document.forms["myForm"]["date"].value;
   let description = document.forms["myForm"]["description"].value;
 
-  if (montant && date && description != "") {
+  if (montant && montant != "" && montant>0 && date && description != "") {
+    let data = JSON.parse(localStorage.getItem(id_edited));
+    data.montant = montant;
+    data.type = document.forms["myForm"]["type"].value;
+    data.date = date;
+    data.description = description;
+    data.status = 'updated';
+    localStorage.setItem(id_edited, JSON.stringify(data));
     button_modifier.removeAttribute('disabled');
   }
 }
@@ -16,11 +24,13 @@ function validateForm() {
 myForm.addEventListener('change', validateForm);
 
 function loadData(){
-    for (let index = 0; index <= count; index++) {
+
+    for (let index = 0; index < count; index++) {
         let argent = JSON.parse(localStorage.getItem(index));
+
         if(argent.status != 'deleted'){
             let element = document.createElement('div');
-            element.classList.add("rounded-xl", "px-5", "py-4", "flex", "justify-between", "gap-1", "text-white", "text-lg", "font-normal");
+            element.classList.add("rounded-xl", "px-5", "py-4", "flex", "flex-col", "gap-1", "text-white", "text-lg", "font-normal");
             if(argent.type == "depense"){
                 element.innerHTML = `<div class="flex items-center truncate">
                 <pre class="font-medium text-xl text-black truncate">
@@ -74,9 +84,9 @@ function deleteTR(id){
 }
 
 function remplirForm(id){
+    id_edited = id;
     document.getElementById("dialog").classList.remove("hidden");
     let argent = JSON.parse(localStorage.getItem(id));
-    console.log(argent.id)
     document.getElementById("montant").value = argent.montant;
     document.getElementById("type").value = argent.type;
     document.getElementById("date").value = argent.date;

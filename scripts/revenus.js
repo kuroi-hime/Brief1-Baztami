@@ -9,7 +9,14 @@ function validateForm() {
   let date = document.forms["myForm"]["date"].value;
   let description = document.forms["myForm"]["description"].value;
 
-  if (montant && date && description != "") {
+  if (montant && montant != "" && montant>0 && date && description != "") {
+    let data = JSON.parse(localStorage.getItem(id_edited));
+    data.montant = montant;
+    data.type = document.forms["myForm"]["type"].value;
+    data.date = date;
+    data.description = description;
+    data.status = 'updated';
+    localStorage.setItem(id_edited, JSON.stringify(data));
     button_modifier.removeAttribute('disabled');
   }
 }
@@ -19,14 +26,15 @@ myForm.addEventListener('change', validateForm);
 function loadData(){
     for (let index = 0; index < count; index++) {
         let argent = JSON.parse(localStorage.getItem(index));
+        
         if(argent.status != 'deleted'){
             let element = document.createElement('div');
-            element.classList.add("rounded-xl", "px-5", "py-4", "flex", "justify-between", "gap-1", "text-white", "text-lg", "font-normal");
+            element.classList.add("rounded-xl", "px-5", "py-4", "flex", "flex-col", "gap-1", "text-white", "text-lg", "font-normal");//justify-between
             if(argent.type == "revenu"){
                 element.innerHTML = `<div class="flex items-center truncate">
-                <pre class="font-medium text-xl text-black truncate">
+                <p class="font-medium text-xl text-black truncate">
                 ${argent.description}: 
-                </pre>
+                </p>
                 <svg class="size-5 text-[#f29a00]" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier">
                 <path d="M6 12H18M12 6V18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> 
                 </g></svg>
@@ -57,24 +65,14 @@ function deleteTR(id){
 }
 
 function remplirForm(id){
+    id_edited = id;
     document.getElementById("dialog").classList.remove("hidden");
     let argent = JSON.parse(localStorage.getItem(id));
-    console.log(argent.id)
     document.getElementById("montant").value = argent.montant;
     document.getElementById("type").value = argent.type;
     document.getElementById("date").value = argent.date;
     document.getElementById("description").value = argent.description;
 }
-
-// function modifierTransaction(id) {
-//     alert("je suis la "+id)
-    // localStorage.setItem(id_edited, JSON.stringify(
-    //     {status: 'modified',
-    //     montant: document.getElementById("montant").value,
-    //     type: document.getElementById("type").value,
-    //     description: document.getElementById("description").value,
-    //     date: document.getElementById("date").value}));
-// }
 
 function fermer() {
     document.getElementById("dialog").classList.add('hidden');

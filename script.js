@@ -34,7 +34,7 @@ function validateForm() {
   let date = document.forms["myForm"]["date"].value;
   let description = document.forms["myForm"]["description"].value;
 
-  if (montant && date && description != "") {
+  if (montant && montant != "" && montant>0 && date && description != "") {
     button_ajouter.removeAttribute('disabled');
   }
 }
